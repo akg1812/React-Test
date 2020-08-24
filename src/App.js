@@ -43,7 +43,7 @@ handleTabIds();
 
   
   console.log(activeTab);
-  let ActiveTabComponent = activeTab.component;
+  const ActiveTabComponent = activeTab.component;
   return(
   <div className="App">  
      <ul className="tabs">
