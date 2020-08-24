@@ -1,0 +1,14 @@
+#comment-container {
+    display: inline-flex;
+}
+
+#comment-container ul{
+    list-style-type: none;
+    min-width: 14em;
+}
+
+#comment-container ul li {
+    padding: 0.3em;
+    text-align: center;
+    border: 0.2em solid rgba(119, 119, 119, 0.4);
+}

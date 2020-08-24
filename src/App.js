@@ -1,26 +1,67 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useState,useEffect} from 'react';
+import axios from 'axios';
+import ShowID from './ShowID/ShowID';
+import ShowPosts from './ShowPosts/ShowPosts';
+import ShowComments from './ShowComments/ShowComments';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App(){
+  const [ids, setIds] = useState(null);
+  const[activeTab,setActiveTab]=useState( {label:"Ids", component: ShowID});
+  const tabChanged=(clickedTab)=>{
+  
+    if(clickedTab.label!==activeTab.label){
+  
+    setActiveTab(clickedTab);
+  }
+  };
+  const tabData=[
+    {label:"Ids", component: ShowID},
+    {label:"Posts", component: ShowPosts},
+    {label:"Comments", component: ShowComments}
+  ];
+
+  useEffect(()=>{
+
+  
+  const handleTabIds=()=>{
+   axios.get("https://jsonplaceholder.typicode.com/users")
+   .then((response)=>{
+     setIds(response.data);
+     console.log(response);
+   })
+  
+
 }
 
-export default App;
+
+handleTabIds();
+},[]);
+
+
+
+
+  
+  console.log(activeTab);
+  let ActiveTabComponent = activeTab.component;
+  return(
+  <div className="App">  
+     <ul className="tabs">
+            
+           
+            {tabData.map((tab)=>(
+                <li 
+                onClick={()=>tabChanged(tab)}
+                 className={activeTab.label===tab.label? "tab active":"tab"}
+                >{tab.label}</li>
+            ))}
+            
+            
+            
+      </ul>
+           <ActiveTabComponent ids={ids} tabData={tabData}/>
+
+  </div>
+
+  )
+}

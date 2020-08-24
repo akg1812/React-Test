@@ -1,0 +1,14 @@
+#post-container {
+    display: inline-flex;
+}
+
+#post-container ul{
+    list-style-type: none;
+    min-width: 14rem;
+}
+
+#post-container ul li {
+    padding: 0.3rem;
+    text-align: center;
+    border: 0.2rem solid rgba(119, 119, 119, 0.4);
+}
