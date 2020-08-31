@@ -1,12 +1,13 @@
-import React ,{useState, useEffect}from 'react';
-import Loader from '../Loader/Loader';
-import './Error.css';
-const Error=()=>{
-    const[error,setError]=useState(false);
+import React ,{ useEffect}from 'react';
 
+import './Error.css';
+const Error=(props)=>{
+   
+   const {error} = props;
     useEffect(()=>{
-       setError(true);
+   
     },[])
+    console.log(error);
     return(
         <div id="error-container">
             {
@@ -15,7 +16,7 @@ const Error=()=>{
             
             <h3>Error: Something went wrong</h3>
             </div>:
-           <Loader/>
+           null
             }
         </div>
 
