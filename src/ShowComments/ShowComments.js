@@ -6,22 +6,35 @@ import Error from '../Error/Error.js';
 
 
 const url="https://jsonplaceholder.typicode.com/comments?postId=1";
-const ShowComments = (props) => {
 
+const ShowComments = (props) => {
 
     const[comments,setComments]=useState(null);
     const[activeTab,setActiveTab]=useState(1);
+    const[error, setError] = useState(true);
     useEffect(()=>{
+    try{
         Axios.get(url)
+    
     
     .then((response)=>{
         (setComments(response.data));
         console.log(response);
     })
-        .catch((error)=>{})
+        .catch((error)=>{
+            setError(true);
+        })
+        throw new Error("Something went Wrong");
+}
+catch(e)
+{
+    // <div><Loader/></div>
+    // <div><Error/></div>
+     console.log(" wrong");
+}
        },[])
 
-
+    
        const{tabData}=props
 
        const tabChanged=(clickedTab)=>{
@@ -31,25 +44,36 @@ const ShowComments = (props) => {
          }
        };
     
-
-    return (
+    
+    return error ? <Error error = {error}></Error> : (
         
         
         
         <div id="comment-container">
+            
             {
-                comments === null ?
+                   comments === null?
                    <div>
                        <h2>
                         
-                           <Loader/>
+                        <Loader/>
+                        
                            
                            
                            
                        </h2>
                     </div>:
                      <ul>
-                    <Error/>
+                 
+                    {
+                    
+                    comments.map(comments => ( 
+                            <li key={comments.body}
+                            onClick={()=>tabChanged(tabData.label)}
+                            className={activeTab===tabData ? "tab active":"tab"}>
+                            {comments.body}</li>
+                    
+                    ))}
                    
                    
 
